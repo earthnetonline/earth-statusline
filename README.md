@@ -77,6 +77,6 @@ mit
 
 ## credits
 
-made by [earth](https://x.com/earth________) 𓈒 [links.earthnet.online](https://links.earthnet.online)
+made by earth 𓈒 [links.earthnet.online](https://links.earthnet.online)
 
 follow me ( °⩊°)⸝[@earth________](https://x.com/earth________)
