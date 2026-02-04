@@ -13,4 +13,5 @@ C_CTX_GOOD='\033[38;2;136;168;128m' # Soft sage #88A880
 C_CTX_WARN='\033[38;2;168;152;104m' # Soft amber #A89868
 C_CTX_BAD='\033[38;2;168;114;104m'  # Soft terracotta #A87268
 C_DIM='\033[38;2;102;102;102m'      # Muted gray #666666
+C_STAGED='\033[38;2;136;152;176m'  # Soft steel blue #8898B0
 C_RESET='\033[0m'

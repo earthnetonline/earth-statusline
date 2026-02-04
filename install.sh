@@ -17,7 +17,6 @@ if ! command -v jq &> /dev/null; then
     echo "install it first:"
     echo "  macos:   brew install jq"
     echo "  linux:   sudo apt-get install jq"
-    echo "  windows: choco install jq"
     echo ""
     exit 1
 fi

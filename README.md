@@ -3,10 +3,12 @@
 custom statusline for claude code that shows context + meow.
 
 ```
-my-project > main │ +12 -3
+my-project > main │ ●+5 -2 │ +12 -3
 
 Opus 4.5 │ (°⩊°) 73% │ ↓2.1k / ↑340
 ```
+
+> **note:** macos/linux only. windows users need git bash or wsl.
 
 ## install
 
@@ -31,7 +33,7 @@ restart claude code. done.
 
 ## what it shows
 
-**line 1** - directory, git branch, uncommitted changes
+**line 1** - directory, git branch, staged changes (●), unstaged changes
 
 **line 2** - model, context % with mood kaomoji, tokens in/out
 
@@ -61,8 +63,6 @@ moods are normalized against claudes 22% auto-compact threshold.
 
 **linux:** `sudo apt-get install jq` or `sudo pacman -S jq`
 
-**windows:** `choco install jq`
-
 ## troubleshooting
 
 **not showing** - restart claude code, check symlink exists, verify jq installed
@@ -70,6 +70,8 @@ moods are normalized against claudes 22% auto-compact threshold.
 **weird characters** - terminal doesnt support 24-bit color. try iterm2/kitty/alacritty
 
 **no git info** - ur not in a git repo
+
+**windows** - use git bash or wsl. native cmd/powershell not supported
 
 ## license
 

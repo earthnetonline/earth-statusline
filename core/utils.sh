@@ -2,10 +2,12 @@
 # Earth Status Line - Utilities
 # Formatting helpers and common functions
 
-# Format tokens (k for thousands)
+# Format tokens (k for thousands, M for millions)
 format_tokens() {
-    local tokens=$1
-    if [ "$tokens" -ge 1000 ]; then
+    local tokens=${1:-0}
+    if [ "$tokens" -ge 1000000 ]; then
+        awk -v t="$tokens" 'BEGIN {printf "%.1fM", t/1000000}'
+    elif [ "$tokens" -ge 1000 ]; then
         awk -v t="$tokens" 'BEGIN {printf "%.1fk", t/1000}'
     else
         echo "$tokens"

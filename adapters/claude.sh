@@ -5,6 +5,8 @@
 # Line 1: Repo/code context
 # Line 2: Session/context info
 
+set -euo pipefail
+
 # Resolve paths relative to this script's location (following symlinks)
 SCRIPT_PATH="${BASH_SOURCE[0]}"
 [ -L "$SCRIPT_PATH" ] && SCRIPT_PATH="$(readlink "$SCRIPT_PATH")"
@@ -23,10 +25,10 @@ AUTOCOMPACT_THRESHOLD=22
 # Read JSON input from Claude Code
 input=$(cat)
 
-# Extract data from JSON
-dir=$(echo "$input" | jq -r '.workspace.current_dir')
+# Extract data from JSON with safe defaults
+dir=$(echo "$input" | jq -r '.workspace.current_dir // ""')
 dir_name=$(basename "$dir")
-model=$(echo "$input" | jq -r '.model.display_name // .model.id')
+model=$(echo "$input" | jq -r '.model.display_name // .model.id // "unknown"')
 total_input=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
 total_output=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
 
@@ -34,10 +36,11 @@ total_output=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
 gather_git_info "$dir"
 
 # Context window calculation
-usage=$(echo "$input" | jq '.context_window.current_usage')
+usage=$(echo "$input" | jq '.context_window.current_usage // null')
 if [ "$usage" != "null" ]; then
-    current=$(echo "$usage" | jq '.input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
-    size=$(echo "$input" | jq '.context_window.context_window_size')
+    current=$(echo "$usage" | jq '(.input_tokens // 0) + (.cache_creation_input_tokens // 0) + (.cache_read_input_tokens // 0)')
+    size=$(echo "$input" | jq '.context_window.context_window_size // 1')
+    [ "$size" -eq 0 ] && size=1  # prevent division by zero
     remaining=$((100 - (current * 100 / size)))
 
     # Normalize remaining % against auto-compact threshold for mood/color
@@ -64,6 +67,10 @@ output_fmt=$(format_tokens "$total_output")
 line1=$(printf "${C_DIR}%s${C_RESET}" "$dir_name")
 if [ -n "$branch" ]; then
     line1="$line1 $(printf "${C_DIM}>${C_RESET} ${C_BRANCH}%s${C_RESET}" "$branch")"
+fi
+# Show staged changes (if any) then unstaged changes
+if [ "$staged_added" != "0" ] || [ "$staged_removed" != "0" ]; then
+    line1="$line1 $(printf "${C_DIM}│${C_RESET} ${C_STAGED}●+%s -%s${C_RESET}" "$staged_added" "$staged_removed")"
 fi
 if [ "$lines_added" != "0" ] || [ "$lines_removed" != "0" ]; then
     line1="$line1 $(printf "${C_DIM}│${C_RESET} ${C_ADD}+%s${C_RESET} ${C_DEL}-%s${C_RESET}" "$lines_added" "$lines_removed")"
