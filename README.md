@@ -8,9 +8,9 @@ my-project > main │ ●+5 -2 │ +12 -3
 Opus 4.5 │ (°⩊°) 73% │ ↓2.1k / ↑340
 ```
 
-> **note:** macos/linux only. windows users need git bash or wsl.
-
 ## install
+
+### macos / linux
 
 requires jq. [install jq](#installing-jq) if u dont have it.
 
@@ -25,6 +25,25 @@ then add to `~/.claude/settings.json`:
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline-command.sh"
+  }
+}
+```
+
+### windows
+
+requires [Windows Terminal](https://aka.ms/terminal) for colors. run in powershell:
+
+```powershell
+iwr -useb https://raw.githubusercontent.com/earthnetonline/earth-statusline/main/install.ps1 | iex
+```
+
+then add to `%USERPROFILE%\.claude\settings.json`:
+
+```json
+{
+  "statusLine": {
+    "type": "command",
+    "command": "pwsh -NoProfile -File '%USERPROFILE%\\.claude\\statusline-command.ps1'"
   }
 }
 ```
@@ -50,11 +69,15 @@ moods are normalized against claudes 22% auto-compact threshold.
 ## files
 
 ```
-├── adapters/claude.sh    # parses json, formats output
-└── core/
-    ├── colors.sh         # muted 24-bit palette
-    ├── git.sh            # branch + diff
-    └── utils.sh          # formatting, mood logic
+├── adapters/
+│   ├── claude.sh         # bash version (macos/linux)
+│   └── claude.ps1        # powershell version (windows)
+├── core/                 # shared logic (bash)
+│   ├── colors.sh
+│   ├── git.sh
+│   └── utils.sh
+├── install.sh            # bash installer
+└── install.ps1           # powershell installer
 ```
 
 ## installing jq
@@ -71,7 +94,7 @@ moods are normalized against claudes 22% auto-compact threshold.
 
 **no git info** - ur not in a git repo
 
-**windows** - use git bash or wsl. native cmd/powershell not supported
+**windows colors broken** - use [Windows Terminal](https://aka.ms/terminal), not cmd.exe
 
 ## license
 
