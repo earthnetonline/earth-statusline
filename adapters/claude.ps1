@@ -193,7 +193,7 @@ if ($gitInfo.Branch) {
 }
 
 if ($gitInfo.StagedAdded -ne 0 -or $gitInfo.StagedRemoved -ne 0) {
-    $line1 += " $($script:C_DIM)|$($script:C_RESET) $($script:C_STAGED)●+$($gitInfo.StagedAdded) -$($gitInfo.StagedRemoved)$($script:C_RESET)"
+    $line1 += " $($script:C_DIM)|$($script:C_RESET) $($script:C_STAGED)✔+$($gitInfo.StagedAdded) -$($gitInfo.StagedRemoved)$($script:C_RESET)"
 }
 
 if ($gitInfo.LinesAdded -ne 0 -or $gitInfo.LinesRemoved -ne 0) {

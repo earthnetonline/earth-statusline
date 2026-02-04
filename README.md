@@ -3,7 +3,7 @@
 custom statusline for claude code that shows context + meow.
 
 ```
-my-project > main │ ●+5 -2 │ +12 -3
+my-project > main │ ✔+5 -2 │ +12 -3
 
 Opus 4.5 │ (°⩊°) 73% │ ↓2.1k / ↑340
 ```
@@ -43,7 +43,7 @@ restart claude code. done.
 
 ## what it shows
 
-**line 1** - directory, git branch, staged changes (●), unstaged changes
+**line 1** - directory, git branch, staged changes (✔), unstaged changes
 
 **line 2** - model, context % with mood kaomoji, tokens in/out
 

@@ -70,7 +70,7 @@ if [ -n "$branch" ]; then
 fi
 # Show staged changes (if any) then unstaged changes
 if [ "$staged_added" != "0" ] || [ "$staged_removed" != "0" ]; then
-    line1="$line1 $(printf "${C_DIM}│${C_RESET} ${C_STAGED}●+%s -%s${C_RESET}" "$staged_added" "$staged_removed")"
+    line1="$line1 $(printf "${C_DIM}│${C_RESET} ${C_STAGED}✔+%s -%s${C_RESET}" "$staged_added" "$staged_removed")"
 fi
 if [ "$lines_added" != "0" ] || [ "$lines_removed" != "0" ]; then
     line1="$line1 $(printf "${C_DIM}│${C_RESET} ${C_ADD}+%s${C_RESET} ${C_DEL}-%s${C_RESET}" "$lines_added" "$lines_removed")"
