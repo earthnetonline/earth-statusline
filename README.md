@@ -37,16 +37,7 @@ requires [Windows Terminal](https://aka.ms/terminal) for colors. run in powershe
 iwr -useb https://raw.githubusercontent.com/earthnetonline/earth-statusline/main/install.ps1 | iex
 ```
 
-then add to `%USERPROFILE%\.claude\settings.json`:
-
-```json
-{
-  "statusLine": {
-    "type": "command",
-    "command": "pwsh -NoProfile -File '%USERPROFILE%\\.claude\\statusline-command.ps1'"
-  }
-}
-```
+the installer will tell you exactly what to add to your settings.json.
 
 restart claude code. done.
 

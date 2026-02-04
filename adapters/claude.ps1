@@ -3,22 +3,27 @@
 #
 # Line 1: Repo/code context
 # Line 2: Session/context info
+#
+# Requires: Windows Terminal (for ANSI colors), Git
 
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "SilentlyContinue"
+
+# ESC character - compatible with PowerShell 5.1+
+$script:ESC = [char]27
 
 # ANSI color codes (Windows Terminal supports these)
-$script:C_DIR = "`e[38;2;136;136;136m"
-$script:C_BRANCH = "`e[38;2;122;130;118m"
-$script:C_ADD = "`e[38;2;122;130;118m"
-$script:C_DEL = "`e[38;2;140;130;130m"
-$script:C_MODEL = "`e[38;2;85;85;85m"
-$script:C_TOKENS = "`e[38;2;152;136;184m"
-$script:C_CTX_GOOD = "`e[38;2;136;168;128m"
-$script:C_CTX_WARN = "`e[38;2;168;152;104m"
-$script:C_CTX_BAD = "`e[38;2;168;114;104m"
-$script:C_DIM = "`e[38;2;102;102;102m"
-$script:C_STAGED = "`e[38;2;136;152;176m"
-$script:C_RESET = "`e[0m"
+$script:C_DIR = "$ESC[38;2;136;136;136m"
+$script:C_BRANCH = "$ESC[38;2;122;130;118m"
+$script:C_ADD = "$ESC[38;2;122;130;118m"
+$script:C_DEL = "$ESC[38;2;140;130;130m"
+$script:C_MODEL = "$ESC[38;2;85;85;85m"
+$script:C_TOKENS = "$ESC[38;2;152;136;184m"
+$script:C_CTX_GOOD = "$ESC[38;2;136;168;128m"
+$script:C_CTX_WARN = "$ESC[38;2;168;152;104m"
+$script:C_CTX_BAD = "$ESC[38;2;168;114;104m"
+$script:C_DIM = "$ESC[38;2;102;102;102m"
+$script:C_STAGED = "$ESC[38;2;136;152;176m"
+$script:C_RESET = "$ESC[0m"
 
 # Claude auto-compacts context around 22% remaining
 $script:AUTOCOMPACT_THRESHOLD = 22
@@ -124,13 +129,16 @@ function Get-GitInfo {
 }
 
 # Read JSON input from stdin
-$inputJson = [Console]::In.ReadToEnd()
-
 try {
+    $inputJson = [Console]::In.ReadToEnd()
+    if ([string]::IsNullOrWhiteSpace($inputJson)) {
+        Write-Output ""
+        exit 0
+    }
     $data = $inputJson | ConvertFrom-Json
 }
 catch {
-    # If JSON parsing fails, output empty and exit
+    # If reading or JSON parsing fails, output empty and exit
     Write-Output ""
     exit 0
 }
