@@ -186,29 +186,29 @@ $inputFmt = Format-Tokens -tokens $totalInput
 $outputFmt = Format-Tokens -tokens $totalOutput
 
 # Build Line 1: Repo/Code
-$line1 = "$($script:C_DIR)$dirName$($script:C_RESET)"
+$line1 = $script:C_DIR + $dirName + $script:C_RESET
 
 if ($gitInfo.Branch) {
-    $line1 += " $($script:C_DIM)>$($script:C_RESET) $($script:C_BRANCH)$($gitInfo.Branch)$($script:C_RESET)"
+    $line1 += " " + $script:C_DIM + ">" + $script:C_RESET + " " + $script:C_BRANCH + $gitInfo.Branch + $script:C_RESET
 }
 
 if ($gitInfo.StagedAdded -ne 0 -or $gitInfo.StagedRemoved -ne 0) {
-    $line1 += " $($script:C_DIM)|$($script:C_RESET) $($script:C_STAGED)staged:+$($gitInfo.StagedAdded) -$($gitInfo.StagedRemoved)$($script:C_RESET)"
+    $line1 += " " + $script:C_DIM + "|" + $script:C_RESET + " " + $script:C_STAGED + "staged:+" + $gitInfo.StagedAdded + " -" + $gitInfo.StagedRemoved + $script:C_RESET
 }
 
 if ($gitInfo.LinesAdded -ne 0 -or $gitInfo.LinesRemoved -ne 0) {
-    $line1 += " $($script:C_DIM)|$($script:C_RESET) $($script:C_ADD)+$($gitInfo.LinesAdded)$($script:C_RESET) $($script:C_DEL)-$($gitInfo.LinesRemoved)$($script:C_RESET)"
+    $line1 += " " + $script:C_DIM + "|" + $script:C_RESET + " " + $script:C_ADD + "+" + $gitInfo.LinesAdded + $script:C_RESET + " " + $script:C_DEL + "-" + $gitInfo.LinesRemoved + $script:C_RESET
 }
 
 # Build Line 2: Context/Session
-$line2 = "$($script:C_MODEL)$model$($script:C_RESET)"
+$line2 = $script:C_MODEL + $model + $script:C_RESET
 
 if ($ctx) {
-    $line2 += " $($script:C_DIM)|$($script:C_RESET) $ctxColor$kaomoji $ctx$($script:C_RESET)"
+    $line2 += " " + $script:C_DIM + "|" + $script:C_RESET + " " + $ctxColor + $kaomoji + " " + $ctx + $script:C_RESET
 }
 
 if ($totalInput -ne 0 -or $totalOutput -ne 0) {
-    $line2 += " $($script:C_DIM)|$($script:C_RESET) $($script:C_TOKENS)in:$($inputFmt)$($script:C_RESET) $($script:C_DIM)/$($script:C_RESET) $($script:C_TOKENS)out:$($outputFmt)$($script:C_RESET)"
+    $line2 += " " + $script:C_DIM + "|" + $script:C_RESET + " " + $script:C_TOKENS + "in:" + $inputFmt + $script:C_RESET + " " + $script:C_DIM + "/" + $script:C_RESET + " " + $script:C_TOKENS + "out:" + $outputFmt + $script:C_RESET
 }
 
 # Output with blank line separator
