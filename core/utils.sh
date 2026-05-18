@@ -19,11 +19,11 @@ format_tokens() {
 get_mood_kaomoji() {
     local remaining=$1
     if [ "$remaining" -gt 50 ]; then
-        echo "(°⩊°)"      # chill
+        echo "(°ω°)"      # chill
     elif [ "$remaining" -gt 20 ]; then
-        echo "(>⩊<)"      # neutral
+        echo "(>ω<)"      # neutral
     else
-        echo "(×⩊×)"      # not chill
+        echo "(×ω×)"      # not chill
     fi
 }
 
