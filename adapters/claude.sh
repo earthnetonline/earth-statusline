@@ -7,9 +7,19 @@
 
 set -euo pipefail
 
-# Resolve paths relative to this script's location (following symlinks)
+# Resolve paths relative to this script's location (following symlinks).
+# Walks the symlink chain handling both absolute and relative targets — the
+# previous one-line readlink broke when invoked via a *relative* symlink
+# (target resolved against the wrong base directory).
 SCRIPT_PATH="${BASH_SOURCE[0]}"
-[ -L "$SCRIPT_PATH" ] && SCRIPT_PATH="$(readlink "$SCRIPT_PATH")"
+while [ -L "$SCRIPT_PATH" ]; do
+  LINK_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+  TARGET="$(readlink "$SCRIPT_PATH")"
+  case "$TARGET" in
+    /*) SCRIPT_PATH="$TARGET" ;;
+    *)  SCRIPT_PATH="$LINK_DIR/$TARGET" ;;
+  esac
+done
 SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
 CORE_DIR="$(dirname "$SCRIPT_DIR")/core"
 
